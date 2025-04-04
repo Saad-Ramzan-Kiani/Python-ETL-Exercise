@@ -30,6 +30,18 @@ df = pd.DataFrame(flattened_data)
 df.to_csv("api_full_users.csv", index=False)
 print("Full API data saved to 'api_full_users.csv'.")
 
+company_info = []
+
+for user in api_data:
+    company_info.append({
+        "Name": user["name"],
+        "Company_Name": user["company"]["name"]
+    })
+
+df_company = pd.DataFrame(company_info)
+df_company.to_csv("User_company_name.csv", index=False)
+print("Company info saved to 'User_company_name.csv'.")
+
 df = pd.read_csv('data.csv')
 
 df_cleaned = df.drop_duplicates()
