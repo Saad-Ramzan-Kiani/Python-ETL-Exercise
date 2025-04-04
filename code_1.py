@@ -1,0 +1,50 @@
+import pandas as pd
+import numpy as np
+import requests
+
+response = requests.get("https://jsonplaceholder.typicode.com/users")
+api_data = response.json()
+
+flattened_data = []
+
+for user in api_data:
+    flattened_data.append({
+        "ID": user["id"],
+        "Name": user["name"],
+        "Username": user["username"],
+        "Email": user["email"],
+        "Street": user["address"]["street"],
+        "Suite": user["address"]["suite"],
+        "City": user["address"]["city"],
+        "Zipcode": user["address"]["zipcode"],
+        "Latitude": user["address"]["geo"]["lat"],
+        "Longitude": user["address"]["geo"]["lng"],
+        "Phone": user["phone"],
+        "Website": user["website"],
+        "Company_Name": user["company"]["name"],
+        "Company_CatchPhrase": user["company"]["catchPhrase"],
+        "Company_BS": user["company"]["bs"]
+    })
+
+df = pd.DataFrame(flattened_data)
+df.to_csv("api_full_users.csv", index=False)
+print("Full API data saved to 'api_full_users.csv'.")
+
+df = pd.read_csv('data.csv')
+
+df_cleaned = df.drop_duplicates()
+
+df['Salary_After_Tax'] = df['Salary'] * 0.9
+
+df['Salary'].fillna(df['Salary'].median(), inplace=True)
+
+df.to_csv('updated_employees.csv', index=False)
+print("New column added and missing salaries filled!")
+
+df_cleaned.to_csv('data_cleaned.csv', index=False)
+print("Cleaned data saved to 'data_cleaned.csv'.")
+
+df.to_json("employees_data.json", orient="records", indent=4)
+print("CSV data converted and saved to 'employees_data.json'.")
+# else:
+#     print("data.csv not found. Please make sure the file exists in the directory.")
