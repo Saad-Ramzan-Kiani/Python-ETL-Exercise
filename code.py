@@ -58,5 +58,4 @@ print("Cleaned data saved to 'data_cleaned.csv'.")
 
 df.to_json("employees_data.json", orient="records", indent=4)
 print("CSV data converted and saved to 'employees_data.json'.")
-# else:
-#     print("data.csv not found. Please make sure the file exists in the directory.")
+
