@@ -1,6 +1,11 @@
 import pandas as pd
 import numpy as np
 import requests
+import os
+
+os.makedirs("input", exist_ok=True)
+os.makedirs("output", exist_ok=True)
+
 
 response = requests.get("https://jsonplaceholder.typicode.com/users")
 api_data = response.json()
@@ -27,7 +32,7 @@ for user in api_data:
     })
 
 df = pd.DataFrame(flattened_data)
-df.to_csv("api_full_users.csv", index=False)
+df.to_csv("output/api_full_users.csv", index=False)
 print("Full API data saved to 'api_full_users.csv'.")
 
 company_info = []
@@ -39,10 +44,10 @@ for user in api_data:
     })
 
 df_company = pd.DataFrame(company_info)
-df_company.to_csv("User_company_name.csv", index=False)
+df_company.to_csv("output/User_company_name.csv", index=False)
 print("Company info saved to 'User_company_name.csv'.")
 
-df = pd.read_csv('data.csv')
+df = pd.read_csv("input/data.csv")
 
 df_cleaned = df.drop_duplicates()
 
@@ -50,13 +55,12 @@ df['Salary_After_Tax'] = df['Salary'] * 0.9
 
 df['Salary'].fillna(df['Salary'].median(), inplace=True)
 
-df.to_csv('updated_employees.csv', index=False)
+df.to_csv('output/updated_employees.csv', index=False)
 print("New column added and missing salaries filled!")
 
-df_cleaned.to_csv('data_cleaned.csv', index=False)
+df_cleaned.to_csv('output/data_cleaned.csv', index=False)
 print("Cleaned data saved to 'data_cleaned.csv'.")
 
-df.to_json("employees_data.json", orient="records", indent=4)
+df.to_json("output/employees_data.json", orient="records", indent=4)
 print("CSV data converted and saved to 'employees_data.json'.")
-# else:
-#     print("data.csv not found. Please make sure the file exists in the directory.")
+
