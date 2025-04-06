@@ -32,7 +32,7 @@ for user in api_data:
     })
 
 df = pd.DataFrame(flattened_data)
-df.to_csv("output/api_full_users.csv", index=False)
+df.to_csv("input/api_data.csv", index=False)
 print("Full API data saved to 'api_full_users.csv'.")
 
 company_info = []
