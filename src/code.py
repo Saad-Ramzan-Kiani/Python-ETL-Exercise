@@ -5,7 +5,7 @@ import os
 
 os.makedirs("input", exist_ok=True)
 os.makedirs("output", exist_ok=True)
-
+os.makedirs("src", exist_ok=True)
 
 response = requests.get("https://jsonplaceholder.typicode.com/users")
 api_data = response.json()
@@ -63,4 +63,6 @@ print("Cleaned data saved to 'data_cleaned.csv'.")
 
 df.to_json("output/employees_data.json", orient="records", indent=4)
 print("CSV data converted and saved to 'employees_data.json'.")
+
+
 
